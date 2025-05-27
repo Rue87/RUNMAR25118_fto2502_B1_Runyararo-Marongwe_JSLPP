@@ -5,6 +5,7 @@ import {
 } from "./ui/modalHandlers.js";
 
 let loadingMessageElement;
+let errorMessageElement;
 
  function showLoading() {
   if(loadingMessageElement) {
@@ -16,6 +17,22 @@ let loadingMessageElement;
       loadingMessageElement.style.display = "none";
     }
   }
+  function showError(message = "Failed to load tasks. Please try again later.") {
+    if (errorMessageElement) {
+      errorMessageElement.textContent = message;
+      // Ensure the error message is visible
+      errorMessageElement.style.display = "block";
+    setTimeout(() => {
+      errorMessageElement.style.display = "none";
+      }, 5000); // Hide after 5 seconds
+  }
+}
+
+    function hideError() {
+      if (errorMessageElement) {
+        errorMessageElement.style.display = "none";
+      }
+    }
 
 /**
  * Fetches tasks from the API.
@@ -29,36 +46,39 @@ async function fetchTasksFromAPI() {
     return tasks;
   } catch (err) {
     console.error("Failed to fetch tasks from API:", err);
-    return []; // fallback: empty list
+    throw err; // fallback: empty list
   }
 }
 
 async function initTaskBoard() {
 
   showLoading();
+  hideError();
 
   try {
   // Wait for tasks to be fetched before hiding loading message
   const tasks = await fetchTasksFromAPI();
-
+  console.log("Fetched tasks:", tasks);
   clearExistingTasks();
   renderTasks(tasks);
 
-  //Add a delay before hiding
-  setTimeout(() => {
-    hideLoading();
-  }, 5000); 
+ 
   }catch (error) {
     console.log("Error during task board initialization:", error);
-  } finally {  hideLoading();
+     showError();
+  } finally { 
+    hideLoading();
+  } 
+   
   }
 
 
   setupModalCloseHandler();
   setupNewTaskModalHandler();
-}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadingMessageElement = document.getElementById("loading-message");
+  errorMessageElement = document.getElementById("error-message");
   initTaskBoard();
 });
 
