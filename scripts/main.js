@@ -51,14 +51,23 @@ async function fetchTasksFromAPI() {
 }
 
 async function initTaskBoard() {
-
   showLoading();
   hideError();
+
+  const savedTasks = localStorage.getItem("kanbanTasks");
+  if(savedTasks !== null){
+    const tasksArray = JSON.parse(savedTasks);
+    renderTasks(tasksArray);
+    console.log("Tasks loaded from local storage:", tasksArray);
+  }
 
   try {
   // Wait for tasks to be fetched before hiding loading message
   const tasks = await fetchTasksFromAPI();
   console.log("Fetched tasks:", tasks);
+
+  localStorage.setItem("kanbanTasks", JSON.stringify(tasks));
+
   clearExistingTasks();
   renderTasks(tasks);
 

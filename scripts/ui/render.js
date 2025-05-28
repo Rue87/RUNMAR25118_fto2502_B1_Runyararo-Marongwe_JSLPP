@@ -21,10 +21,13 @@ export function clearExistingTasks() {
  * Renders tasks to their appropriate columns.
  */
 export function renderTasks(tasks) {
+  console.log("Rendering tasks:", tasks);
   tasks.forEach((task) => {
     const container = getTaskContainerByStatus(task.status);
     if (container) {
+      console.log(`Appending task "${task.title}" to`, container);
       const taskElement = createTaskElement(task);
+      console.log("Created task element:", taskElement);
       container.appendChild(taskElement);
     }
   });
