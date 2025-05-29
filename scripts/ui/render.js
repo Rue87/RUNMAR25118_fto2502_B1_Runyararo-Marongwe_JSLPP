@@ -1,7 +1,9 @@
 import { createTaskElement } from "./taskElement.js";
 
 /**
- * Finds the task container element based on task status.
+ * Get the task container element for a given status.
+ * @param {string} status - Task status (e.g. "todo", "doing", "done").
+ * @returns {HTMLElement|null} Task container element or null if not found.
  */
 function getTaskContainerByStatus(status) {
   const column = document.querySelector(`.column-div[data-status="${status}"]`);
@@ -19,6 +21,7 @@ export function clearExistingTasks() {
 
 /**
  * Renders tasks to their appropriate columns.
+ * @param {Array<Object>} tasks - List of task objects to render.
  */
 export function renderTasks(tasks) {
   console.log("Rendering tasks:", tasks);

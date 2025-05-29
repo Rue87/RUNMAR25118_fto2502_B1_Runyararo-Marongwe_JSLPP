@@ -4,11 +4,18 @@ import { renderTasks, clearExistingTasks } from  "./render.js";
 let currentEditingTaskId = null;
 let isEditing = false;
 
+/**
+ * Sets up close button handler for the task modal.
+ */
+
 export function setupModalCloseHandler() {
   const modal = document.getElementById("task-modal");
   const closeBtn = document.getElementById("close-modal-btn");
   closeBtn.addEventListener("click", () => modal.close());
 }
+/**
+ * Sets up the "Add New Task" modal: open, cancel, and submit logic.
+ */
 
 export function setupNewTaskModalHandler() {
   const newTaskModal = document.querySelector(".modal-overlay")
@@ -18,11 +25,14 @@ export function setupNewTaskModalHandler() {
   const newTaskBtn = document.getElementById("add-new-task-btn");
   const cancelBtn = document.getElementById("cancel-add-btn");
 
+  // Open modal on button click
+
   newTaskBtn.addEventListener("click", () => {
     form.reset(); // Clear the form fields
     newTaskModal.showModal(); // Show the modal for adding a new task
-  
   });
+
+  // Close modal on cancel
   cancelBtn.addEventListener("click", () =>{
     newTaskModal.close(); 
   });
@@ -101,6 +111,7 @@ document.getElementById("task-form").addEventListener("submit", (e) => {
     localStorage.setItem("kanbanTasks", JSON.stringify(tasks));
     clearExistingTasks();
     renderTasks(tasks);
+    
     document.getElementById("task-modal").close(); 
     isEditing = false;
     currentEditingTaskId = null; // Reset the editing task ID

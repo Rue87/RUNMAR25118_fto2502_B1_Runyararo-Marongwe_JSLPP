@@ -15,6 +15,15 @@
   --sidebar-width: 300px; /* Sidebar fixed width */
 }
 
+[data-theme="dark"] {
+  --primary-color: #2b2c37; /* Dark background */
+  --secondary-color: #20212c; /* Darker secondary background */
+  --primary-font-color: #ffffff; /* Light font color for contrast */
+  --secondary-font-color: #828fa3; /* Lighter secondary font color */
+  --primary-btn-color: #635fc7; /* Primary button color remains the same */
+  --primary-box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Darker shadow for depth */
+}
+
 /* ================
    Base Elements
 ================ */
@@ -39,6 +48,12 @@ body {
   border-right: 1px solid #e4ebfa; /* Light divider */
   width: var(--sidebar-width);
   height: 100vh;
+  transition: all 0.3s ease;
+}
+body.sidebar-hidden #layout {
+  margin-left: 0;
+  width: 100%;
+  padding-left: 30px; /* Adjust main layout when sidebar is hidden */
 }
 
 #side-logo-div {
@@ -52,8 +67,7 @@ body {
 }
 
 .boards-nav-links-div {
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1;
   color: var(--primary-font-color);
 }
 
@@ -83,6 +97,169 @@ h4 {
   font-weight: bold;
   cursor: pointer;
   overflow: hidden; /* Prevents overflowed text/icons from showing */
+}
+
+.theme-toggle-and-sidebar-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+  margin-top: auto;
+}
+
+/*---Theme toggle container---*/
+.theme-toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 160px; /* Space above toggle */
+  background-color: var(--secondary-color);
+  border-radius: 12px;
+  padding-top: 10px;
+  padding-bottom: 14px;
+  margin-right: 10px;
+  margin-left: 12px;
+  gap: 12px;
+  width: 90%;
+  align-self: center;
+}
+
+/*Theme toggle container: purple background in dark mode*/
+[data-theme="dark"] .theme-toggle-container {
+  background-color: var(--primary-btn-color);
+}
+
+/*Slider background: black in dark mode*/
+[data-theme="dark"] .switch .slider.round {
+  background-color: #000000; /* Darker track color */
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px; /* Width of the switch */
+  height: 20px; /* Height of the switch */
+  margin-right: 0 12px; /* Space between switch and text */
+}
+.theme-toggle-container .theme-icon {
+  width: 20px;
+  height: 20px;
+}
+/* ---The Switch Itself(based on check box ---*/
+/* Hide the default HTML checkbox */
+.switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--primary-btn-color);
+  border-radius: 12px; /* Rounded track */
+
+  transition: background-color 0.4s ease-in-out; /* Smooth transition for color change */
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px; /* Position knob inside track */
+  bottom: 2px; /* Position knob inside track */
+  background-color: #fff; /* White knob */
+  border-radius: 50%; /* Circular knob */
+  transition: transform 0.4s ease-in-out; /* Smooth transition for knob movement */
+}
+
+/* When the checkbox is checked, change the track color and move the knob */
+.switch input:checked + .slider.round {
+  background-color: var(
+    --primary-btn-color
+  ); /* Change track color when checked */
+}
+.switch input:checked + .slider.round::before {
+  transform: translateX(20px); /* Move knob to the right when checked */
+}
+
+.slider.round {
+  border-radius: 12px; /* Rounded track */
+}
+
+.theme-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/*---Hide Sidebar Button---*/
+.hide-sidebar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--primary-btn-color);
+  background-color: var(--secondary-color);
+  border: none;
+  border-top-right-radius: 100px; /* Rounded right side */
+  border-bottom-right-radius: 100px; /* Rounded right side */
+  height: 48px;
+  padding: 0 20px;
+  margin: 0 0 0 0; /* Right margin for spacing */
+  cursor: pointer;
+  text-align: left;
+  margin-left: 0;
+  font-weight: 700;
+  width: 98%;
+}
+
+/*Button turns puple with white text in dark mode*/
+[data-theme="dark"] .hide-sidebar-btn {
+  background-color: var(--primary-btn-color);
+  color: #fff; /* White text in dark mode */
+}
+/* Hide sidebar button icon */
+.hide-sidebar-btn img {
+  width: 20px;
+  height: 20px; /* Icon size */
+  margin-right: 8px; /* Space between icon and text */
+}
+.hide-sidebar-text {
+  line-height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 34px;
+}
+
+.show-sidebar-btn {
+  position: fixed;
+  bottom: 32px;
+  left: 0px;
+  z-index: 999; /* Ensure it appears above other content */
+  background-color: var(--primary-btn-color);
+  opacity: 0.7;
+  border: none;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.show-sidebar-btn img {
+  width: 15px;
+  height: 15px;
+}
+.side-bar.hidden {
+  display: none !important;
 }
 
 /* ===============
@@ -180,9 +357,9 @@ header {
   background-color: #219c90;
 }
 
-.loading-message{
+.loading-message {
   display: none;
-  position : fixed;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -193,14 +370,14 @@ header {
 }
 
 .error-message {
-  position:fixed;
+  position: fixed;
   top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 1rem;
   font-weight: 600;
   color: #ea5555; /* Error color */
-  display:none;
+  display: none;
   z-index: 1000;
 }
 .button-group {
@@ -210,7 +387,7 @@ header {
   margin-top: 20px; /* Space above button group */
 }
 .submit-btn,
-.delete-btn{
+.delete-btn {
   flex: 1;
   text-align: center;
   height: 40px;
@@ -225,13 +402,11 @@ header {
   align-items: center;
   justify-content: center;
 }
-.delete-btn{
+.delete-btn {
   background-color: #ea5555; /* Red color for delete button */
-
 }
-.submit-btn{
+.submit-btn {
   background-color: var(--primary-btn-color); /* Primary button color */
-  
 }
 
 /* ===============
@@ -422,7 +597,24 @@ textarea {
   border-radius: 4px;
   resize: vertical;
 }
+.body.mobile-menu-active.side-bar {
+  transform: translateX(0) !important; /* Move sidebar back on-screen */
+}
+/*close button (red X) for mobile sidebar*/
+.close-sidebar-btn {
+  align-self: flex-end;
+  margin: 16px;
+  font-size: 1.5rem;
+  color: red;
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: none;
+}
 
+.mobile-menu-toggle {
+  display: none;
+}
 /* ========================
    Responsive Styles
 ======================== */
@@ -430,13 +622,27 @@ textarea {
 /******** Tablets ********/
 @media screen and (max-width: 1023px) {
   .side-bar {
-    display: none; /* Hide sidebar on tablets and smaller */
+    display: flex;
+    flex-direction: column;
+    top: 64px;
+    left: 0;
+    width: 264px;
+    height: 697px;
+    position: fixed; /* Hide sidebar on tablets and smaller */
+    transform: translateX(-100%); /* Move sidebar off-screen */
+    z-index: 1000; /* Ensure sidebar is above other content */
+    background-color: var(--primary-color);
+    border-right: none;
+    transition: transform 0.3s ease;
+    padding-top: 0;
   }
-
-  .side-bar.show-sidebar {
+  body.mobile-menu-active::before .side-bar.show-sidebar {
     display: flex !important;
     position: fixed; /* Overlay on top of page */
     height: auto;
+  }
+  .close-sidebar-btn {
+    display: block; /* Show close button on tablets */
   }
 
   #side-logo-div {
@@ -448,6 +654,13 @@ textarea {
     width: 30px;
     height: 30px;
     margin-right: 10px;
+  }
+  .mobile-menu-toggle {
+    display: inline;
+    display: transparent;
+    color: #fff;
+    border: none;
+    background-color: #fff;
   }
 
   body {
@@ -480,6 +693,7 @@ textarea {
 
   #header-board-name {
     font-size: 1rem;
+    display: none;
   }
 
   .task-div {

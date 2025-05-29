@@ -21,6 +21,7 @@
   <body>
     <!-- Navigation Sidebar: Contains the logo, navigation links for boards, and theme toggle. -->
     <nav class="side-bar" id="side-bar-div">
+      <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
       <div id="side-logo-div">
         <img id="logo" src="./assets/logo-light.svg" alt="logo-light" />
       </div>
@@ -29,17 +30,34 @@
         <h4 id="headline-sidepanel">ALL BOARDS (1)</h4>
         <button class="board-btn">Launch Career</button>
       </div>
+      <div class="theme-toggle-and-sidebar-btn">
+      <div class="theme-toggle-container">
+        <img src ="./assets/icon-light-theme.svg" alt="light-theme-icon" class="theme-icon light-theme-icon" />
+        <label class="switch">
+          <input type="checkbox" id="theme-switch" />
+          <span class="slider round"></span>
+        </label>
+        <img src="./assets/icon-dark-theme.svg" alt="dark-theme-icon" class="theme-icon dark-theme-icon" />
+      </div>
+        <button class="hide-sidebar-btn" id="hide-sidebar-btn">
+          <img src="./assets/icon-hide-sidebar.svg" alt="hide-sidebar-icon" style="margin-right: 20px;"/>
+          <span class="hide-sidebar-text">Hide Sidebar</span>
+        </button>
+      </div>
     </nav>
+   
+      
 
     <!-- Main Layout: Header with board title, add task button, and main content area for task columns. -->
     <div id="layout">
       <header id="header" class="sticky-header">
         <div class="header-name-div">
+          <button id="mobile-menu-toggle" class="mobile-menu-toggle">
           <img
             src="./assets/favicon.svg"
             alt="logo-mobile"
             class="logo-mobile"
-          />
+          ></button>
           <h2 class="header-board-name" id="header-board-name">
             Launch Career
           </h2>
@@ -85,6 +103,7 @@
             <div class="tasks-container"></div>
           </div>
         </main>
+        
       </div>
     </div>
     <!-- Modal: Displays each tasks details when the task is clicked -->
@@ -175,5 +194,9 @@
         </div>
       </form>
     </dialog>
+    <!--show sidebar button (FLOATING)-->
+        <button class="show-sidebar-btn" id="show-sidebar-btn" style="display: none;">
+          <img src="./assets/icon-show-sidebar.svg" alt="show-sidebar-icon" />
+      </button>
   </body>
 </html>

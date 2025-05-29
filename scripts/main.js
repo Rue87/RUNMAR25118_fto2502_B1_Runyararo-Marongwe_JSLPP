@@ -7,16 +7,28 @@ import {
 let loadingMessageElement;
 let errorMessageElement;
 
+/**
+ * Displays the loading message if the element is avaible.
+ */
+
  function showLoading() {
   if(loadingMessageElement) {
   loadingMessageElement.style.display = "block";
   }
 }
+/**
+ * Hides the loading message.
+ */
   function hideLoading() {
     if (loadingMessageElement) {
       loadingMessageElement.style.display = "none";
     }
   }
+  
+/**
+ * Displays an error message.
+ * @param {string} [message="Failed to load tasks. Please try again later."] - The error message to display.
+ */
   function showError(message = "Failed to load tasks. Please try again later.") {
     if (errorMessageElement) {
       errorMessageElement.textContent = message;
@@ -27,7 +39,9 @@ let errorMessageElement;
       }, 5000); // Hide after 5 seconds
   }
 }
-
+     /**
+ * Hides the error message.
+ */
     function hideError() {
       if (errorMessageElement) {
         errorMessageElement.style.display = "none";
@@ -36,7 +50,8 @@ let errorMessageElement;
 
 /**
  * Fetches tasks from the API.
- * @returns {Promise<Array>} A promise that resolves to an array of tasks, or an empty array on error.
+ * @returns {Promise<Array>} A promise that resolves to an array of tasks
+ *  @throws {Error} If the API request fails.
  */
 async function fetchTasksFromAPI() {
   try {
@@ -46,14 +61,18 @@ async function fetchTasksFromAPI() {
     return tasks;
   } catch (err) {
     console.error("Failed to fetch tasks from API:", err);
-    throw err; // fallback: empty list
+    throw err; 
   }
 }
 
+/**
+ * Initializes the Kanban task board: load from localStorage or API, and render tasks.
+ */
 async function initTaskBoard() {
   showLoading();
   hideError();
 
+   // Load from localStorage if available
   const savedTasks = localStorage.getItem("kanbanTasks");
   if(savedTasks !== null){
     const tasksArray = JSON.parse(savedTasks);
@@ -61,34 +80,102 @@ async function initTaskBoard() {
     console.log("Tasks loaded from local storage:", tasksArray);
   }
 
+  // Try fetching from API
   try {
-  // Wait for tasks to be fetched before hiding loading message
   const tasks = await fetchTasksFromAPI();
   console.log("Fetched tasks:", tasks);
 
   localStorage.setItem("kanbanTasks", JSON.stringify(tasks));
-
   clearExistingTasks();
   renderTasks(tasks);
-
- 
   }catch (error) {
     console.log("Error during task board initialization:", error);
-     showError();
+    showError();
   } finally { 
     hideLoading();
   } 
-   
-  }
+}
+  
+//=== Theme Toggle ===
+/**
+ * Sets up theme toggle (light/dark mode).
+ */
+function setupThemeToggle(){
+const themeSwitch = document.getElementById("theme-switch");
+const root = document.documentElement;
+const savedTheme = localStorage.getItem("theme") || "light";
+
+themeSwitch.checked = savedTheme === "dark";
+root.setAttribute("data-theme", savedTheme);
+
+//Listen to theme toggle
+themeSwitch.addEventListener("change", () => {
+  const newTheme = themeSwitch.checked ? "dark" : "light";
+  root.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
+
+});
+}
+//=== Sidebar Toggle ===
+/**
+ * Sets up all sidebar-related toggle buttons for both desktop and mobile.
+*/
+
+const sidebar = document.getElementById("side-bar-div");
+const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+const hideSidebarBtn = document.getElementById("hide-sidebar-btn");
+const showSidebarBtn = document.getElementById("show-sidebar-btn");
+const closeSidebarBtn = document.getElementById("close-sidebar-btn");
+const body = document.body;
+
+// ---Mobile: Open sidebar via logo
+mobileMenuToggle.addEventListener("click", () => {
+  sidebar.classList.add("show-sidebar");
+  body.classList.add("mobile-menu-active");
+
+});
 
 
-  setupModalCloseHandler();
-  setupNewTaskModalHandler();
+// ---Mobile:Close sidebar ---
+  closeSidebarBtn.addEventListener("click", () => {
+    sidebar.classList.remove("show-sidebar");
+    body.classList.remove("mobile-menu-active");
+  });
 
+// ---Desktop: Hide sidebar---
+hideSidebarBtn.addEventListener("click", () => {
+  sidebar.classList.add("hidden");
+  hideSidebarBtn.style.display = "none";
+  showSidebarBtn.style.display = "block";
+});
+
+// ---Desktop: Show sidebar ---
+showSidebarBtn.addEventListener("click", () => {
+  sidebar.classList.remove("hidden");
+  hideSidebarBtn.style.display = "block";
+  showSidebarBtn.style.display = "none";
+});
+
+// Initialize everything when the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   loadingMessageElement = document.getElementById("loading-message");
   errorMessageElement = document.getElementById("error-message");
   initTaskBoard();
-});
+  setupModalCloseHandler();
+  setupNewTaskModalHandler();
+  setupThemeToggle()
+  setupSidebarToggle()
+
+
+console.log("Sidebar:", sidebar);
+console.log("Mobile menu toggle:", mobileMenuToggle);
+console.log("Close sidebar button:", closeSidebarBtn);
+console.log("Hide button:", hideSidebarBtn);
+console.log("Show button:", showSidebarBtn);
+
+
+}
+);
+
 
 

@@ -5,6 +5,11 @@ import {
 import { clearExistingTasks, renderTasks } from "../ui/render.js";
 import { resetForm } from "./formUtils.js";
 
+/**
+ * Gathers form input and submits a new task to the API.
+ * On success, re-fetches all tasks and re-renders the board.
+ */
+
 export async function addNewTask() {
   const title = document.getElementById("title-input").value.trim();
   const description = document.getElementById("desc-input").value.trim();
@@ -20,7 +25,7 @@ export async function addNewTask() {
   };
 
   try {
-    // Replace localStorage logic with API POST
+    // Send new task to API
     const response = await fetch("https://jsl-kanban-api.vercel.app", {
       method: "POST",
       headers: {
@@ -30,7 +35,7 @@ export async function addNewTask() {
     });
     if (!response.ok) throw new Error("Failed to add new task");
 
-    //Get updated tasks from API
+     // Re-fetch all tasks after successful addition
     const tasksResponse = await fetch("https://jsl-kanban-api.vercel.app");
     const tasks = await tasksResponse.json();
 
