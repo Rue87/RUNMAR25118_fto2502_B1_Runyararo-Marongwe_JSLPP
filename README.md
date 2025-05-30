@@ -66,6 +66,10 @@ This Kanban Task Manager enables users to organize tasks visually into three col
 - **Theme and Icon Integration:** Integrating custom icons for theme toggling and sidebar buttons while maintaining performance and accessibility.
 - **Loading message not visible:** The loading message is not visible because of the loading speed of the local storage,however when the tasks are loaded from the API, it definitely appears.
 - The **Hide Sidebar** button becomes misaligned when the "Show Sidebar" button is clicked. When the sidebar reappears, the button loses its proper alignment and only returns to its correct position after a page refresh.
+
+I have deployed this project on netlify, and you can access it using the following link: https://kanban-task-manager-10915b.netlify.app/
+
+You can also check out the full explanation video on the following link: https://www.veed.io/view/18e53990-7e13-4d57-84dc-d95c794f22ae?panel=share
   
 P.S. This project is open for collaboration. My contacts are just below.
 
