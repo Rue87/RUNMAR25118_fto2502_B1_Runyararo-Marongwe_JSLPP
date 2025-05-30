@@ -35,7 +35,7 @@ export async function addNewTask() {
     });
     if (!response.ok) throw new Error("Failed to add new task");
 
-     // Re-fetch all tasks after successful addition
+    // Re-fetch all tasks after successful addition
     const tasksResponse = await fetch("https://jsl-kanban-api.vercel.app");
     const tasks = await tasksResponse.json();
 

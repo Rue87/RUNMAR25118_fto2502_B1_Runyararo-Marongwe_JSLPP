@@ -167,15 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 HIGHLIGHT END
 */
 
-
-
-
-
-
-
-
 //old main.js code
-
 
 import { clearExistingTasks, renderTasks } from "./ui/render.js";
 import {
@@ -186,47 +178,45 @@ import {
 let loadingMessageElement;
 let errorMessageElement;
 
+//Displays the loading message if the element is avaible.
 
- //Displays the loading message if the element is avaible.
- 
-
- function showLoading() {
-  if(loadingMessageElement) {
-  loadingMessageElement.style.display = "block";
+function showLoading() {
+  if (loadingMessageElement) {
+    loadingMessageElement.style.display = "block";
   }
 }
 /**
  * Hides the loading message.
  */
-  function hideLoading() {
-    if (loadingMessageElement) {
-      loadingMessageElement.style.display = "none";
-    }
+function hideLoading() {
+  if (loadingMessageElement) {
+    loadingMessageElement.style.display = "none";
   }
-  
+}
+
 /**
  * Displays an error message.
   @param {string} [message="Failed to load tasks. Please try again later."] - The error message to display.
  */
 
-  function showError(message = "Failed to load tasks. Please try again later.") {
-    if (errorMessageElement) {
-      errorMessageElement.textContent = message;
-      // Ensure the error message is visible
-      errorMessageElement.style.display = "block";
+function showError(message = "Failed to load tasks. Please try again later.") {
+  if (errorMessageElement) {
+    errorMessageElement.textContent = message;
+    // Ensure the error message is visible
+    errorMessageElement.style.display = "block";
     setTimeout(() => {
       errorMessageElement.style.display = "none";
-      }, 5000); // Hide after 5 seconds
+    }, 5000); // Hide after 5 seconds
   }
 }
-     /**
+/**
  * Hides the error message.
  */
-    function hideError() {
-      if (errorMessageElement) {
-        errorMessageElement.style.display = "none";
-      }
-    }
+function hideError() {
+  if (errorMessageElement) {
+    errorMessageElement.style.display = "none";
+  }
+}
 
 /**
  * Fetches tasks from the API.
@@ -241,7 +231,7 @@ async function fetchTasksFromAPI() {
     return tasks;
   } catch (err) {
     console.error("Failed to fetch tasks from API:", err);
-    throw err; 
+    throw err;
   }
 }
 
@@ -252,9 +242,9 @@ async function initTaskBoard() {
   showLoading();
   hideError();
 
-   // Load from localStorage if available
+  // Load from localStorage if available
   const savedTasks = localStorage.getItem("kanbanTasks");
-  if(savedTasks !== null){
+  if (savedTasks !== null) {
     const tasksArray = JSON.parse(savedTasks);
     renderTasks(tasksArray);
     console.log("Tasks loaded from local storage:", tasksArray);
@@ -264,46 +254,45 @@ async function initTaskBoard() {
 
   //Try fetching from API
   try {
-  const tasks = await fetchTasksFromAPI();
-  console.log("Fetched tasks:", tasks);
+    const tasks = await fetchTasksFromAPI();
+    console.log("Fetched tasks:", tasks);
 
-  localStorage.setItem("kanbanTasks", JSON.stringify(tasks));
-  clearExistingTasks();
-  renderTasks(tasks);
-  hideLoading();
-  }catch (error) {
+    localStorage.setItem("kanbanTasks", JSON.stringify(tasks));
+    clearExistingTasks();
+    renderTasks(tasks);
+    hideLoading();
+  } catch (error) {
     console.log("Error during task board initialization:", error);
     showError();
-  } finally { 
+  } finally {
     hideLoading();
-  } 
+  }
 }
-  
+
 /* === Theme Toggle ===
 
   Sets up theme toggle (light/dark mode).
  */
-function setupThemeToggle(){
-const themeSwitch = document.getElementById("theme-switch");
-const root = document.documentElement;
-const savedTheme = localStorage.getItem("theme") || "light";
+function setupThemeToggle() {
+  const themeSwitch = document.getElementById("theme-switch");
+  const root = document.documentElement;
+  const savedTheme = localStorage.getItem("theme") || "light";
 
-themeSwitch.checked = savedTheme === "dark";
-root.setAttribute("data-theme", savedTheme);
+  themeSwitch.checked = savedTheme === "dark";
+  root.setAttribute("data-theme", savedTheme);
 
-//Listen to theme toggle
-themeSwitch.addEventListener("change", () => {
-  const newTheme = themeSwitch.checked ? "dark" : "light";
-  root.setAttribute("data-theme", newTheme);
-  localStorage.setItem("theme", newTheme);
-
-});
+  //Listen to theme toggle
+  themeSwitch.addEventListener("change", () => {
+    const newTheme = themeSwitch.checked ? "dark" : "light";
+    root.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  });
 }
 
 //=== Sidebar Toggle ===
 
- /* Sets up all sidebar-related toggle buttons for both desktop and mobile.
-*/
+/* Sets up all sidebar-related toggle buttons for both desktop and mobile.
+ */
 
 const sidebar = document.getElementById("side-bar-div");
 const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
@@ -316,15 +305,13 @@ const body = document.body;
 mobileMenuToggle.addEventListener("click", () => {
   sidebar.classList.add("show-sidebar");
   body.classList.add("mobile-menu-active");
-
 });
 
-
 // ---Mobile:Close sidebar ---
-  closeSidebarBtn.addEventListener("click", () => {
-    sidebar.classList.remove("show-sidebar");
-    body.classList.remove("mobile-menu-active");
-  });
+closeSidebarBtn.addEventListener("click", () => {
+  sidebar.classList.remove("show-sidebar");
+  body.classList.remove("mobile-menu-active");
+});
 
 // ---Desktop: Hide sidebar---
 hideSidebarBtn.addEventListener("click", () => {
@@ -347,19 +334,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initTaskBoard();
   setupModalCloseHandler();
   setupNewTaskModalHandler();
-  setupThemeToggle()
-  setupSidebarToggle()
+  setupThemeToggle();
+  setupSidebarToggle();
 
-
-console.log("Sidebar:", sidebar);
-console.log("Mobile menu toggle:", mobileMenuToggle);
-console.log("Close sidebar button:", closeSidebarBtn);
-console.log("Hide button:", hideSidebarBtn);
-console.log("Show button:", showSidebarBtn);
-
-
-}
-);
-
-
-
+  console.log("Sidebar:", sidebar);
+  console.log("Mobile menu toggle:", mobileMenuToggle);
+  console.log("Close sidebar button:", closeSidebarBtn);
+  console.log("Hide button:", hideSidebarBtn);
+  console.log("Show button:", showSidebarBtn);
+});
