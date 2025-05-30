@@ -64,7 +64,9 @@ This Kanban Task Manager enables users to organize tasks visually into three col
 - **Modal Management:** Handling multiple modals (add task and edit task) with seamless open/close transitions without conflicts.
 - **Task State Persistence:** Guaranteeing every add, edit, and delete operation updates the UI and localStorage correctly in real time.
 - **Theme and Icon Integration:** Integrating custom icons for theme toggling and sidebar buttons while maintaining performance and accessibility.
-
+- **Loading message not visible:** The loading message is not visible because of the loading speed of the local storage,however when the tasks are loaded from the API, it definitely appears.
+- The **Hide Sidebar** button becomes misaligned when the "Show Sidebar" button is clicked. When the sidebar reappears, the button loses its proper alignment and only returns to its correct position after a page refresh.
+  
 P.S. This project is open for collaboration. My contacts are just below.
 
 ## Contact
