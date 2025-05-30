@@ -37,8 +37,7 @@ export function setupNewTaskModalHandler() {
     newTaskModal.close(); 
   });
 
-    
-// Unified submit handler for both adding and editing tasks
+  
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -80,10 +79,9 @@ export function openTaskModal(task) {
   document.getElementById("task-title").value = task.title;
   document.getElementById("task-desc").value = task.description;
   document.getElementById("task-status").value = task.status;
-
- 
+  
   isEditing = true; // set editing mode
-  currentEditingTaskId = task.id;// store the task id for editing
+  currentEditingTaskId = task.id;// store id of the task being edited
   modal.showModal();
 }
 

@@ -62,6 +62,12 @@ body.sidebar-hidden #layout {
   justify-content: flex-start;
 }
 
+#side-logo-dark {
+  margin: 33px 113px 54px 34px; /* Spacing around logo */
+  display: none;
+  justify-content: flex-start;
+}
+
 #logo {
   width: 100%; /* Make logo responsive within container */
 }
@@ -163,8 +169,7 @@ h4 {
   bottom: 0;
   background-color: var(--primary-btn-color);
   border-radius: 12px; /* Rounded track */
-
-  transition: background-color 0.4s ease-in-out; /* Smooth transition for color change */
+  transition: 0.4s ease-in-out; /* Smooth transition for color change */
 }
 
 .slider::before {
@@ -181,8 +186,7 @@ h4 {
 
 /* When the checkbox is checked, change the track color and move the knob */
 .switch input:checked + .slider.round {
-  background-color: var(
-    --primary-btn-color
+  background-color: var(--primary-btn-color
   ); /* Change track color when checked */
 }
 .switch input:checked + .slider.round::before {
@@ -219,7 +223,7 @@ h4 {
 }
 
 /*Button turns puple with white text in dark mode*/
-[data-theme="dark"] .hide-sidebar-btn {
+ .hide-sidebar-btn {
   background-color: var(--primary-btn-color);
   color: #fff; /* White text in dark mode */
 }
