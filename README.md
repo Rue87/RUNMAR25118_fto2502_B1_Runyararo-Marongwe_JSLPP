@@ -13,20 +13,20 @@ This Kanban Task Manager enables users to organize tasks visually into three col
 - **JavaScript(ES6+)** -  Core logic, DOM manipulation, event handling
 - **LocalStorage API** - Persisting user tasks locally
 - **Fetch API** - Retrieving initial tasks from a remote API
-- **Custom SVG icons** -  For theme toggle and sidebar buttons (Provided for me in the assets folder)
+- **Custom SVG icons** -  For theme toggle and sidebar buttons (Provided for me in the assets folder).
 
 ## Features
 
 - **Initial Data Fetching:** Loads tasks from an external API on first visit.
 - **Local Storage Persistence:** Saves all changes locally to keep data after page reloads.
 - **Task Management:** Create, edit, delete tasks with modals.
-- **Theme Toggle:** Switch between dark and light themes with custom icons
+- **Theme Toggle:** Switch between dark and light themes with custom icons.
 
 ## Setup Instructions
 
 1. **Clone or Download Repository**/ Download the ZIP and extract it.
 2. **Open the App:** Open the index.html file in any modern browser (Chrome, Firefox, Edge, Safari).
-3. **Icons and Assets:**Ensure the /assets/icons folder remains in place as it contains the downloaded SVG icons used in the theme toggle and sidebar buttons.
+3. **Icons and Assets:** Ensure the /assets/icons folder remains in place as it contains the downloaded SVG icons used in the theme toggle and sidebar buttons.
 
 ## Usage Guide
 
@@ -74,6 +74,3 @@ P.S. This project is open for collaboration. My contacts are just below.
 
 
 
-## License
-
-Provided for **educational purposes only**.
